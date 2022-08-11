@@ -1,7 +1,7 @@
 FROM node:16
 # Above, we set the base image as a light weight node image called alpine
 
-WORKDIR './app'
+WORKDIR '/app'
 # Above we set the build environment as a folder called /app in the docker container to prevent clashes
 
 COPY package.json .

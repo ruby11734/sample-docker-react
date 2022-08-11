@@ -1,0 +1,22 @@
+# this would contain the instructions on what you want travis-ci to do with your code when a build is triggered.
+
+sudo: required
+# sudo: required- Travis ci requires the user to be with elevated permission
+language: node_js
+# language: node_js- A way to specify the language that should be used in building the app
+node_js:
+    - "stable"
+
+services:
+  # services- Used to tell travis-ci that we need an instance of docker running for this build
+    - docker
+before_install:
+  # before_install- An array of things to do with your code before running tests
+  # or deploying your code(The instruction here builds the docker image
+  # using our Dockerfile.dev file and tags it with the name yuwangjr/sample-app)
+    - docker build -t ruby11734/sample-app -f Dockerfile.dev .
+script:
+  # scripts: An array of scripts to run before deploying your code.
+  # (Tests typically go here (The instruction here runs the our test
+  # by running image named yuwangjr/sample-app and overriding the command specified in the Dockerfile.dev)
+    - docker run -e CI=true ruby11734/sample-app npm run test -- --coverage --watchAll=false
